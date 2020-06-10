@@ -65,15 +65,15 @@ Locales['en'] = {
   ['ranger'] = 'Garage: <br /> Your car has been stored in the garage!',
   ['promote_member'] = 'promote %s',
   
-  -- LMC
-  ['lmcmenu'] = 'LMC Menu',
-  ['lmcmenu_info'] = 'press ~INPUT_CONTEXT~ to access job menu',
-  ['lmcteleporter1'] = 'Inside Teleport',
-  ['lmcteleporter1_info'] = 'press ~INPUT_CONTEXT~ to enter LMC Clubhouse',
-  ['lmcteleporter2'] = 'Outside Teleport',
-  ['lmcteleporter2_info'] = 'press ~INPUT_CONTEXT~ to exit LMC Clubhouse',
-  ['lmcgteleporter1'] = 'Inside Garage Teleport',
-  ['lmcgteleporter1_info'] = 'press ~INPUT_CONTEXT~ to enter LMC Clubhouse garage',
-  ['lmcgteleporter2'] = 'Outside Garage Teleport',
-  ['lmcgteleporter2_info'] = 'press ~INPUT_CONTEXT~ to exit LMC Clubhouse garage',
+  -- BBG
+  ['bbgmenu'] = 'BBG Menu',
+  ['bbgmenu_info'] = 'press ~INPUT_CONTEXT~ to access job menu',
+  ['bbgteleporter1'] = 'Inside Teleport',
+  ['bbgteleporter1_info'] = 'press ~INPUT_CONTEXT~ to enter BBG Clubhouse',
+  ['bbgteleporter2'] = 'Outside Teleport',
+  ['bbgteleporter2_info'] = 'press ~INPUT_CONTEXT~ to exit BBG Clubhouse',
+  ['bbggteleporter1'] = 'Inside Garage Teleport',
+  ['bbggteleporter1_info'] = 'press ~INPUT_CONTEXT~ to enter BBG Clubhouse garage',
+  ['bbggteleporter2'] = 'Outside Garage Teleport',
+  ['bbggteleporter2_info'] = 'press ~INPUT_CONTEXT~ to exit BBG Clubhouse garage',
 }

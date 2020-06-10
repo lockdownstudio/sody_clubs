@@ -10,10 +10,10 @@ Config.ClubBlipPre = "Club House: " --Prefix to Blip Name on map
 Config.PayInterval = 28 * 60000 -- Adjust '28' to set payout time in minutes
 Config.EnableClubBankPay = true -- Enables Pay to come out of club's bank instead of thin air
 Config.EnableESXIdentity = true -- Shows characer first/lastname instead of Steam name in member menu
-Config.GarageScript = "eden_garage" -- 'eden_garage' (for eden_garage/esx_drp_garage) or 'esx_advancedgarage' supported
+Config.GarageScript = "esx_advancedgarage" -- 'eden_garage' (for eden_garage/esx_drp_garage) or 'esx_advancedgarage' supported
 
 Config.ClubBlips = { -- Only shown to club members
-	lmc = { -- Must match Database name
+	bbg = { -- Must match Database name
 		BlipSprite = 226,
 		BlipPos = {x= 985.49, y= -108.34, z= 73.34},
 		BlipColor = 5,
@@ -21,7 +21,7 @@ Config.ClubBlips = { -- Only shown to club members
 }
 
 Config.Clubs = {
-	lmc = { -- Must match Database name
+	bbg = { -- Must match Database name
 		Garage = { -- Vehicle Garage
 			x = 967.06, y = -121.28, z = 73.35, h = 136.05
 		},
@@ -126,9 +126,9 @@ Config.Clubs = {
 				Color = {r = 113, g = 204, b = 81},
 				Marker= 25,
 				Blip  = false,
-				Name  = _U('lmcmenu'),
+				Name  = _U('bbgmenu'),
 				Type  = "owner",
-				Hint  = _U('lmcmenu_info'),
+				Hint  = _U('bbgmenu_info'),
 			},
 		},
 	},
