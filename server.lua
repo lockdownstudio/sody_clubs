@@ -61,7 +61,7 @@ RegisterCommand('setclub', function(source, args, user)
 		if xPlayer then
 			if has_value(ClubListFull, incclub) and incclub ~= "none" then
 				if has_value(Clubs[incclub].ranks, incrank)  then
-					if havePermission(sourcexPlayer) or checkrank(sourcexPlayer.identifier)
+					if havePermission(sourcexPlayer) or checkrank(sourcexPlayer.identifier) then
 						setClub(_source, xPlayer.identifier, incclub, incrank, 'hire')
 					else
 						TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
