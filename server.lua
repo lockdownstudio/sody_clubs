@@ -13,7 +13,7 @@ ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 MySQL.ready(function()
---AddEventHandler('onResourceStart', function(resourceName) -- For debugging to start/stop resources without server restart
+---AddEventHandler('onResourceStart', function(resourceName) -- For debugging to start/stop resources without server restart
 	Wait(2000) -- For debugging to start/stop resources without server restart
 	local result = MySQL.Sync.fetchAll('SELECT * FROM sody_clubs', {})
 
@@ -28,6 +28,7 @@ MySQL.ready(function()
 
 	for i=1, #result2, 1 do
 		Clubs[result2[i].club_name].ranks[tostring(result2[i].club_rank)] = result2[i]
+		
 	end
 
 	TriggerClientEvent('sody_clubs:forceSync', -1)
@@ -35,6 +36,7 @@ MySQL.ready(function()
 	nextReset = GetGameTimer() + Config.PayInterval
 	startClubPayCycle()
 end)
+--end)
 
 function startClubPayCycle()
 	while true do
@@ -48,17 +50,22 @@ function startClubPayCycle()
 	end
 end
 
-ESX.RegisterCommand('setclub', 'admin', function(source, args, user)
+RegisterCommand('setclub', function(source, args, user)
 	if tonumber(args[1]) and args[2] and tonumber(args[3]) then
-		local _source = source
+		local _source = args[1]
 		local incclub = args[2]
 		local incrank = args[3]
 		local xPlayer = ESX.GetPlayerFromId(args[1])
+		local sourcexPlayer = ESX.GetPlayerFromId(source)
 
 		if xPlayer then
 			if has_value(ClubListFull, incclub) and incclub ~= "none" then
-				if has_value(Clubs[incclub].ranks, incrank) then
-					setClub(_source, xPlayer.identifier, incclub, incrank, 'hire')
+				if has_value(Clubs[incclub].ranks, incrank)  then
+					if havePermission(sourcexPlayer) or checkrank(sourcexPlayer.identifier)
+						setClub(_source, xPlayer.identifier, incclub, incrank, 'hire')
+					else
+						TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
+					end
 				else
 					TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'That club rank does not exist.' } })
 				end
@@ -74,8 +81,6 @@ ESX.RegisterCommand('setclub', 'admin', function(source, args, user)
 	else
 		TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Invalid usage.' } })
 	end
---[[ end, function(source, args, user)
-	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } }) ]]--
 end, true, {help = _U('setclub'), validate = true, arguments = {
 	{name = 'id', help = _U('id_param'), type = 'player'}, 
 	{name = 'club', help = _U('setclub_param2'), type = 'string'}, 
@@ -911,4 +916,43 @@ function clubPay()
 			end
 		end
 	end)
+end
+
+function checkRank(source)
+
+        MySQL.Async.fetchAll('SELECT club, club_rank FROM users WHERE identifier=@identifier', {['@identifier'] = source}, function(result)
+                if result[1].club then
+                        local playerrank = tostring(result[1].club_rank)
+                        local returntable = {
+                                club = result[1].club,
+                                club_rank = result[1].club_rank,
+                                club_rank_name = Clubs[result[1].club].ranks[playerrank].club_rank_name
+                        }
+                        if club_rank_name == 'boss' then
+				return true
+			end 
+                end
+        end)
+	return false
+end
+
+function havePermission(xPlayer, exclude)	-- you can exclude rank(s) from having permission to specific commands 	[exclude only take tables]
+	if exclude and type(exclude) ~= 'table' then exclude = nil;print("^3[esx_admin] ^1ERROR ^0exclude argument is not table..^0") end	-- will prevent from errors if you pass wrong argument
+
+	local playerGroup = xPlayer.getGroup()
+	for k,v in pairs(Config.adminRanks) do
+		if v == playerGroup then
+			if not exclude then
+				return true
+			else
+				for a,b in pairs(exclude) do
+					if b == v then
+						return false
+					end
+				end
+				return true
+			end
+		end
+	end
+	return false
 end
