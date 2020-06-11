@@ -48,9 +48,11 @@ function startClubPayCycle()
 	end
 end
 
-TriggerEvent('es:addGroupCommand', 'setclub', 'jobmaster', function(source, args, user)
+ESX.RegisterCommand('setclub', 'admin', function(source, args, user)
 	if tonumber(args[1]) and args[2] and tonumber(args[3]) then
-		local _source, incclub, incrank = args[1], args[2], args[3]
+		local _source = source
+		local incclub = args[2]
+		local incrank = args[3]
 		local xPlayer = ESX.GetPlayerFromId(args[1])
 
 		if xPlayer then
@@ -72,9 +74,13 @@ TriggerEvent('es:addGroupCommand', 'setclub', 'jobmaster', function(source, args
 	else
 		TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Invalid usage.' } })
 	end
-end, function(source, args, user)
-	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } })
-end, {help = _U('setclub'), params = {{name = 'id', help = _U('id_param')}, {name = 'club', help = _U('setclub_param2')}, {name = 'rank_id', help = _U('setclub_param3')}}})
+--[[ end, function(source, args, user)
+	TriggerClientEvent('chat:addMessage', source, { args = { '^1SYSTEM', 'Insufficient Permissions.' } }) ]]--
+end, true, {help = _U('setclub'), validate = true, arguments = {
+	{name = 'id', help = _U('id_param'), type = 'player'}, 
+	{name = 'club', help = _U('setclub_param2'), type = 'string'}, 
+	{name = 'rank_id', help = _U('setclub_param3'), type = 'number'}
+}})
 
 
 ESX.RegisterServerCallback('sody_clubs:getPlayerClub', function(source, cb)
